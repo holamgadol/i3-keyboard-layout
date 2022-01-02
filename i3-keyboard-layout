@@ -3,9 +3,11 @@
 set -e
 
 get_kbdlayout() {
-  layout=$(setxkbmap -query | grep -oP 'layout:\s*\K([\w,]+)')
-  variant=$(setxkbmap -query | grep -oP 'variant:\s*\K(\w+)')
-  echo "$layout" "$variant"
+    case "$(xset -q|grep LED| awk '{ print $10 }')" in
+    "00000000") echo "English" ;;
+    "00001000") echo "Русский" ;;
+    *) echo "unknown" ;;
+    esac
 }
 
 set_kbdlayout() {
